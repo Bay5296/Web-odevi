@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İletişim</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px;}
+    
+    
+form {
+      max-width: 600px;
+      margin: auto;
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.2);
+    }
+    label { font-weight: bold; display: block; margin-top: 15px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    .buttons { margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+    button {
+      padding: 10px 20px;
+      border: none;
+      background: black;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover { background: #444; }
+    .error { color: red; margin-top: 10px; }
+    .success { color: green; margin-top: 10px; }
+  .radio-group {
+  display: flex;
+  gap: 20px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+</style>
+</head>
+<body>
+
+  <h1>İletişim</h1>
+
+  <form id="contactForm" action="iletisim_sonuc.html" method="GET">
+    <label for="name">Ad Soyad</label>
+    <input type="text" id="name" name="name">
+
+    <label for="email">E-posta</label>
+    <input type="email" id="email" name="email">
+
+    <label for="phone">Telefon</label>
+    <input type="tel" id="phone" name="phone" placeholder="05xxxxxxxxx">
+
+    <label for="birthdate">Doğum Tarihi</label>
+    <input type="date" id="birthdate" name="birthdate">
+
+    <label for="subject">Konu</label>
+
+    <select id="subject" name="subject">
+      <option value="">Seçiniz</option>
+      <option>dizi önerisi</option>
+      <option>kitap önerisi</option>
+      <option>çikolata önerisi</option>
+      <option>İnsanın gerçekten özgür iradesi var mı?</option>
+      <option>Evren nereye genişliyor?</option>
+      <option>İnsanlık nereye gidiyor</option>
+      <option>Ali koç istifa</option>
+    </select>
+
+    <label for="cinsiyet">Cinsiyet</label>
+<div class="radio-group" id="cinsiyet">
+  <label><input type="radio" name="cins" value="Erkek"> Erkek</label>
+  <label><input type="radio" name="cins" value="Kadın"> Kadın</label>
+  <label><input type="radio" name="cins" value="Diğer"> Diğer</label>
+</div>
+
+
+    <label for="message">Mesaj</label>
+    <textarea id="message" name="message" rows="4"></textarea>
+
+    <div class="buttons">
+      <button type="button" id="validateJS">JS ile Doğrula</button>
+      <button type="button" id="validateVue">Vue ile Doğrula</button>
+      <button type="reset">Temizle</button>
+      <button type="submit">Gönder</button>
+    </div>
+
+    <div id="resultJS" class="error"></div>
+  </form>
+
+  <div id="vueApp">
+    <div v-if="errors.length" class="error">
+      <p><strong>Vue Hatalar:</strong></p>
+      <ul>
+        <li v-for="e in errors" :key="e">{{ e }}</li>
+      </ul>
+    </div>
+    <div v-else-if="success" class="success">
+      <p>Vue doğrulama başarılı!</p>
+    </div>
+  </div>
+
+  <script>
+    // JS ile doğrulama
+    document.getElementById('validateJS').addEventListener('click', function () {
+      const form = document.getElementById('contactForm');
+      const errors = [];
+
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+
+      if (!form.name.value.trim()) errors.push("Ad Soyad boş olamaz.");
+      if (!form.email.value.trim() || !emailPattern.test(form.email.value)) errors.push("Geçerli e-posta girin.");
+      if (!form.phone.value.trim() || !/^\d+$/.test(form.phone.value)) errors.push("Telefon sadece rakam olmalı.");
+      if (!form.birthdate.value) errors.push("Doğum tarihi girin.");
+      if (!form.subject.value) errors.push("Konu seçin.");
+      if (!form.cins.value) errors.push("Cinsiyet seçin.");
+      if (!form.message.value.trim()) errors.push("Mesaj girin.");
+
+      const resultDiv = document.getElementById("resultJS");
+      resultDiv.innerHTML = errors.length
+        ? "<ul>" + errors.map(e => `<li>${e}</li>`).join('') + "</ul>"
+        : "<p class='success'>JS doğrulama başarılı!</p>";
+    });
+
+    // Vue ile doğrulama
+    const { createApp } = Vue;
+    createApp({
+      data() {
+        return { errors: [], success: false }
+      },
+      methods: {
+        validate() {
+          const form = document.getElementById("contactForm");
+          this.errors = [];
+          this.success = false;
+
+          const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,}$/;
+
+          if (!form.name.value.trim()) this.errors.push("Ad Soyad boş olamaz.");
+          if (!form.email.value.trim() || !emailPattern.test(form.email.value)) this.errors.push("Geçerli e-posta girin.");
+          if (!form.phone.value.trim() || !/^\d+$/.test(form.phone.value)) this.errors.push("Telefon sadece rakam olmalı.");
+          if (!form.birthdate.value) this.errors.push("Doğum tarihi girin.");
+          if (!form.subject.value) this.errors.push("Konu seçin.");
+          if (!form.cins.value) this.errors.push("Cinsiyet seçin.");
+          if (!form.message.value.trim()) this.errors.push("Mesaj girin.");
+
+          if (this.errors.length === 0) this.success = true;
+        }
+      },
+      mounted() {
+        document.getElementById("validateVue").addEventListener("click", this.validate);
+      }
+    }).mount("#vueApp");
+  </script>
+</body>
+</html>
