@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İletişim Sonuç</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 30px;
+  background-image: url('img/iletisim.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+
+      margin: 0;
+
+       }
+ 
+
+   ul {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    strong {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gönderilen Bilgiler</h1>
+
+  <ul>
+    <li><strong>Ad Soyad:</strong> <span id="name"></span></li>
+    <li><strong>E-posta:</strong> <span id="email"></span></li>
+    <li><strong>Telefon:</strong> <span id="phone"></span></li>
+    <li><strong>Doğum Tarihi:</strong> <span id="birthdate"></span></li>
+    <li><strong>Konu:</strong> <span id="subject"></span></li>
+    <li><strong>Cinsiyet:</strong> <span id="cins"></span></li>
+    <li><strong>Mesaj:</strong> <span id="message"></span></li>
+  </ul>
+
+  <script>
+    function getParam(name) {
+      const url = new URL(window.location.href);
+      return url.searchParams.getAll(name);
+    }
+
+    document.getElementById('name').textContent = getParam('name');
+    document.getElementById('email').textContent = getParam('email');
+    document.getElementById('phone').textContent = getParam('phone');
+    document.getElementById('birthdate').textContent = getParam('birthdate');
+    document.getElementById('subject').textContent = getParam('subject');
+    document.getElementById('cins').textContent = getParam('cins');
+
+    document.getElementById('message').textContent = getParam('message');
+  </script>
+
+</body>
+</html>
