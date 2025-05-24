@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Ankara</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+   
+ body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+background-image: url('img/sehrim.jpg');
+      background-size: cover;         
+      background-repeat: no-repeat;   
+      background-position: center;    
+      height: 100vh;                  
+      margin: 0;
+
+    }
+
+    h1 {
+      margin-top: 30px;
+    }
+
+    .slider {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .slides {
+      position: relative;
+      height: 400px;
+    }
+
+    .slide {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+      z-index: 1;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      z-index: 2;
+    }
+
+    .nav-buttons button {
+      background: rgba(0,0,0,0.6);
+      color: white;
+      border: none;
+      font-size: 28px;
+      padding: 10px 16px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    .nav-buttons button:hover {
+      background: rgba(0,0,0,0.8);
+    }
+
+    .dots {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 6px;
+      background: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: #333;
+    }
+
+    @media (max-width: 768px) {
+      .slides {
+        height: 250px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Ankara</h1>
+
+  <div class="slider">
+    <div class="slides">
+      <div class="slide active"><img src="img/kizilay.jpg" alt="Kızılay"></div>
+      <div class="slide"><img src="img/anitkabir.jpg" alt="Anıtkabir"></div>
+      <div class="slide"><img src="img/mogan.jpg" alt="Mogan Gölü"></div>
+      <div class="slide"><img src="img/asti.jpg" alt="AŞTİ"></div>
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="prevSlide()">&#10094;</button>
+      <button onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <div class="dots" id="dots"></div>
+  </div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dotsContainer = document.getElementById('dots');
+    let current = 0;
+
+    // Dots
+    slides.forEach((_, index) => {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => showSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.dot');
+
+    function showSlide(i) {
+      slides[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current = i;
+      slides[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+
+    function nextSlide() {
+      showSlide((current + 1) % slides.length);
+    }
+
+    function prevSlide() {
+      showSlide((current - 1 + slides.length) % slides.length);
+    }
+
+    // Auto-slide
+    setInterval(() => {
+      nextSlide();
+    }, 5000);
+  </script>
+<section id="kizilay" style="padding: 30px;">
+  <h2>Kızılay Meydanı</h2>
+  <p>Kızılay Meydanı ya da 15 Temmuz Kızılay Millî İrade Meydanı, Türkiye'nin başkenti Ankara'nın merkezindeki kent meydanıdır.İsmini 1929 yılında meydana bakan bir noktada Türk Kızılayı için inşa edilen genel merkez binasından almıştır.Bugün söz konusu bina yıkılmış ve yerine Kızılay AVM binası inşa edilmiştir.Kızılay maddi ve manevi her türlü ihtiyacınızı karşılamak için Ankara'ya gittiğinizde kesinlikle uğramanız gereken başlıca yerler arasında.</p>
+</section>
+
+<section id="anitkabir" style="padding: 30px;">
+  <h2>Anıtkabir</h2>
+  <p>Anıtkabir,Türkiye Cumhuriyeti'nin kurucusu Mustafa Kemal Atatürk'ün anıt mezarıdır.Her yıl milyonlarca ziyaretçi ağırlar.Ana yapı olan anıt mezar binasının Şeref Holü olarak adlandırılan kısmında Atatürk'ün sembolik bir lahdi yer alırken Atatürk'ün naaşı, bu yapının alt katındaki mezar odasında defnedilmiştir.Giriş, Aslanlı Yol'un başlangıcından yapılır ve bu yol,tören meydanına ulaşır.Ankara'ya gittiğinizde uğramanız gereken başlıca yerler arasında ilki burasıdır.</p>
+</section>
+
+<section id="mogan" style="padding: 30px;">
+  <h2>Mogan Gölü</h2>
+  <p>Mogan Gölü,Gölbaşı ilçesinde yer alan doğal bir güzelliktir.Piknik alanları ve yürüyüş yollarıyla ünlüdür.Göl ve çevresi,Barselona Sözleşmesi çerçevesinde Türkiye'de ilan edilen 15 özel koruma bölgesinden bir tanesini oluşturan "Gölbaşı Özel Çevre Koruma Bölgesi" içinde yer alır.</p>
+</section>
+
+<section id="asti" style="padding: 30px;">
+  <h2>AŞTİ (Ankara Şehirlerarası Terminali)</h2>
+  <p>Ankara Şehirlerarası Otobüs Terminali ya da resmî adıyla Ankara Şehirlerarası Terminal İşletmesi (AŞTİ),Ankara'da yer alan bir şehirlerarası otobüs terminalidir. Türkiye'de inşa edilmiş en büyük şehirlerarası otobüs terminali olan AŞTİ, 1995'ten beri birçok şehirlerarası otobüs hattına hizmet vermektedir.</p>
+</section>
+
+</body>
+ <footer class="footer">
+  <p>&copy; 2025 Mehmet Ali Işık</p>
+</footer> </body>
+
+</html>
